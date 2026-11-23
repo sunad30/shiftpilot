@@ -1,0 +1,110 @@
+import type { State, Worker, Shift } from "./types";
+// All records are synthetic. Fixed dates make demos and evaluations reproducible.
+const window = {
+  start: "2027-01-12T06:00:00-05:00",
+  end: "2027-01-12T22:00:00-05:00",
+};
+const workers: Worker[] = [
+  {
+    id: "w-01",
+    name: "Jordan Ellis",
+    skills: ["packing", "forklift"],
+    availability: [window],
+    booked: [],
+    hourlyRate: 24,
+  },
+  {
+    id: "w-02",
+    name: "Morgan Lee",
+    skills: ["packing"],
+    availability: [window],
+    booked: [],
+    hourlyRate: 21,
+  },
+  {
+    id: "w-03",
+    name: "Alex Rivera",
+    skills: ["forklift", "inventory"],
+    availability: [window],
+    booked: [
+      { start: "2027-01-12T08:00:00-05:00", end: "2027-01-12T16:00:00-05:00" },
+    ],
+    hourlyRate: 25,
+  },
+  {
+    id: "w-04",
+    name: "Taylor Kim",
+    skills: ["inventory", "packing"],
+    availability: [window],
+    booked: [],
+    hourlyRate: 27,
+  },
+  {
+    id: "w-05",
+    name: "Sam Parker",
+    skills: ["packing", "forklift"],
+    availability: [{ start: "2027-01-12T16:00:00-05:00", end: window.end }],
+    booked: [],
+    hourlyRate: 23,
+  },
+  {
+    id: "w-06",
+    name: "Casey Brooks",
+    skills: ["inventory", "forklift"],
+    availability: [window],
+    booked: [],
+    hourlyRate: 32,
+  },
+];
+const shifts: Shift[] = [
+  {
+    id: "SP-1042",
+    site: "Hudson Fulfillment",
+    role: "Forklift operator",
+    skills: ["forklift"],
+    start: "2027-01-12T08:00:00-05:00",
+    end: "2027-01-12T16:00:00-05:00",
+    maxRate: 28,
+    priority: "urgent",
+    note: "Our morning operator called out. Find a qualified replacement for the full shift and prepare a coverage proposal.",
+    status: "open",
+  },
+  {
+    id: "SP-1043",
+    site: "Greenpoint Goods",
+    role: "Packing associate",
+    skills: ["packing"],
+    start: "2027-01-12T09:00:00-05:00",
+    end: "2027-01-12T17:00:00-05:00",
+    maxRate: 25,
+    priority: "normal",
+    note: "Additional coverage for a new shipment. Keep the hourly rate within the approved budget.",
+    status: "open",
+  },
+  {
+    id: "SP-1044",
+    site: "Liberty Distribution",
+    role: "Inventory specialist",
+    skills: ["inventory"],
+    start: "2027-01-12T10:00:00-05:00",
+    end: "2027-01-12T18:00:00-05:00",
+    maxRate: 26,
+    priority: "urgent",
+    note: "Need a qualified inventory specialist. Escalate if no available worker meets the budget.",
+    status: "open",
+  },
+  {
+    id: "SP-1045",
+    site: "Hudson Fulfillment",
+    role: "Evening forklift operator",
+    skills: ["forklift"],
+    start: "2027-01-12T16:00:00-05:00",
+    end: "2027-01-12T22:00:00-05:00",
+    maxRate: 28,
+    priority: "normal",
+    note: "Prepare evening coverage. The earlier shift ends exactly when this one starts.",
+    status: "open",
+  },
+];
+export const seed = (): State =>
+  structuredClone({ version: 1, shifts, workers, runs: [], events: [] });
